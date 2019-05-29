@@ -9,10 +9,12 @@ function echart01(){
       legend: {
         orient: 'vertical',
         x: 'right',
-        top: 'top',
+        top: '10px',
+        right:'5px',
         textStyle: {
           color: '#fff'
         },
+        itemWidth:20,
         data:['算力告警','风扇告警','温度告警','网络告警','板卡告警']
       },
       series: [

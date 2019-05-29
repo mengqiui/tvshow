@@ -37,7 +37,7 @@
       <span class="icon iconfont color-sky fs60">&#xe60b;</span>
     </div>
     <div class="item-panel-right">
-        <p>实时算力/标准算力</p>
+        <p>实时算力/标准算力(T)</p>
         <div class="color-sky">126/8954</div>
     </div>
   </div>
@@ -46,8 +46,8 @@
       <span class="icon iconfont color-org">&#xe604;</span>
     </div>
     <div class="item-panel-right">
-        <p>故障率/故障总数</p>
-        <div class="color-org">126/8954</div>
+        <p>故障总数/故障率</p>
+        <div class="color-org">8954/1.26%</div>
     </div>
   </div>
  
@@ -55,8 +55,8 @@
   <div class="chart-data">
     <!-- 2-2-1、故障数据饼图 堆叠图 -->
     <div class="data-model model-left left">
-      <div class="model-title"><span class="icon iconfont">&#xeb95;</span>故障类型统计</div>
-      <div id="echarts01" style="width:240px;height:200px;top:20%;"></div>
+      <div class="model-title"><span class="icon iconfont">&#xeb95;</span>告警类型统计</div>
+      <div id="echarts01" style="width:240px;height:260px;top:10%;"></div>
     </div>
 
     <!-- 2-2-2、异常设备表格 -->
@@ -66,58 +66,70 @@
         <table>
           <thead>
             <th>IP</th>
-            <th>描述</th>
-            <th>时间</th>
+            <th>告警类型</th>
+            <th>告警时间</th>
+            <th>消警时间</th>
+
           </thead>
           <tbody>
             <tr>
               <td>192.168.80.201</td>
               <td>算力异常</td>
-              <td>2019-5-29 15:54:35</td>
+              <td>5/29 15:54:35</td>
+              <td>5/29 15:54:35</td>
             </tr>
             <tr>
               <td>192.168.80.69</td>
               <td>算力异常</td>
-              <td>2019-5-29 15:54:35</td>
+              <td>5/29 15:54:35</td>
+              <td>5/29 15:54:35</td>
             </tr>
             <tr>
               <td>192.168.80.54</td>
               <td>算力异常</td>
+              <td>2019-5-29 15:54:35</td>
               <td>2019-5-29 15:54:35</td>
             </tr>
             <tr>
               <td>192.168.80.201</td>
               <td>算力异常</td>
               <td>2019-5-29 15:54:35</td>
+              <td>2019-5-29 15:54:35</td>
             </tr>
             <tr>
               <td>192.168.80.69</td>
               <td>算力异常</td>
               <td>2019-5-29 15:54:35</td>
-            </tr>
-            <tr>
-              <td>192.168.80.54</td>
-              <td>算力异常</td>
               <td>2019-5-29 15:54:35</td>
             </tr>
             <tr>
               <td>192.168.80.54</td>
               <td>算力异常</td>
+              <td>2019-5-29 15:54:35</td>
+              <td>2019-5-29 15:54:35</td>
+            </tr>
+            <tr>
+              <td>192.168.80.54</td>
+              <td>算力异常</td>
+              <td>2019-5-29 15:54:35</td>
               <td>2019-5-29 15:54:35</td>
             </tr>
             <tr>
               <td>192.168.80.201</td>
               <td>算力异常</td>
               <td>2019-5-29 15:54:35</td>
+              <td>2019-5-29 15:54:35</td>
             </tr>
             <tr>
               <td>192.168.80.69</td>
               <td>算力异常</td>
               <td>2019-5-29 15:54:35</td>
+              <td>2019-5-29 15:54:35</td>
             </tr>
             <tr>
               <td>192.168.80.54</td>
               <td>算力异常</td>
+              <td>2019-5-29 15:54:35</td>
               <td>2019-5-29 15:54:35</td>
             </tr>
           </tbody>
