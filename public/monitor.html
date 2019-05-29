@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>矿场监控中心</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="fonts/iconfont.css">
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <script src="js/jquery.js"></script>
+  <script src="fonts/iconfont.js"></script>
+</head>
+<body class="bg-body">
+<!-- 一：头部 矿场监控中心 -->
+<div class="nav-top">
+  <div class="nav-center"><h2 class="h2">矿场监控中心</h2><p>Ebang mine data monitoring center</p></div>
+</div>
+<!-- 二：内容 汇总数据 和 详细数据 -->
+<section class="section">
+  <!-- 2-1：三块 数据显示 -->
+  <!-- <p><div class="item-button"><span class="icon iconfont">&#xe615;</span>总体概况</div></p> -->
+  <div class="item-panel left">
+    <div class="item-panel-left">
+      <span class="icon iconfont color-yel">&#xe61a;</span>
+    </div>
+    <div class="item-panel-right">
+        <p>活跃数/总数</p>
+        <div class="color-yel"><span class="number" id="activeNum">2650</span>/<span>86654</span></div>
+    </div>
+  </div>
+  <div class="item-panel mcenter clear">
+    <div class="item-panel-left">
+      <span class="icon iconfont color-sky fs60">&#xe60b;</span>
+    </div>
+    <div class="item-panel-right">
+        <p>实时算力/标准算力</p>
+        <div class="color-sky">126/8954</div>
+    </div>
+  </div>
+  <div class="item-panel right mr0">
+    <div class="item-panel-left">
+      <span class="icon iconfont color-org">&#xe604;</span>
+    </div>
+    <div class="item-panel-right">
+        <p>故障率/故障总数</p>
+        <div class="color-org">126/8954</div>
+    </div>
+  </div>
+ 
+  <!-- 2-2：图表 报表数据 -->
+  <div class="chart-data">
+    <!-- 2-2-1、故障数据饼图 堆叠图 -->
+    <div class="data-model model-left left">
+      <div class="model-title"><span class="icon iconfont">&#xeb95;</span>故障类型统计</div>
+      <div id="echarts01" style="width:240px;height:200px;top:20%;"></div>
+    </div>
+
+    <!-- 2-2-2、异常设备表格 -->
+    <div class="data-model model-right right">
+      <div class="model-title"><span class="icon iconfont">&#xe635;</span>矿机实时数据</div>
+      <div class="model-body">
+        <table>
+          <thead>
+            <th>IP</th>
+            <th>描述</th>
+            <th>时间</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>192.168.80.201</td>
+              <td>算力异常</td>
+              <td>2019-5-29 15:54:35</td>
+            </tr>
+            <tr>
+              <td>192.168.80.69</td>
+              <td>算力异常</td>
+              <td>2019-5-29 15:54:35</td>
+            </tr>
+            <tr>
+              <td>192.168.80.54</td>
+              <td>算力异常</td>
+              <td>2019-5-29 15:54:35</td>
+            </tr>
+            <tr>
+              <td>192.168.80.201</td>
+              <td>算力异常</td>
+              <td>2019-5-29 15:54:35</td>
+            </tr>
+            <tr>
+              <td>192.168.80.69</td>
+              <td>算力异常</td>
+              <td>2019-5-29 15:54:35</td>
+            </tr>
+            <tr>
+              <td>192.168.80.54</td>
+              <td>算力异常</td>
+              <td>2019-5-29 15:54:35</td>
+            </tr>
+            <tr>
+              <td>192.168.80.54</td>
+              <td>算力异常</td>
+              <td>2019-5-29 15:54:35</td>
+            </tr>
+            <tr>
+              <td>192.168.80.201</td>
+              <td>算力异常</td>
+              <td>2019-5-29 15:54:35</td>
+            </tr>
+            <tr>
+              <td>192.168.80.69</td>
+              <td>算力异常</td>
+              <td>2019-5-29 15:54:35</td>
+            </tr>
+            <tr>
+              <td>192.168.80.54</td>
+              <td>算力异常</td>
+              <td>2019-5-29 15:54:35</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 2-2-3、修复好设备 -->
+    <!-- <div class="data-model model-right right">
+      <div class="model-title"><span class="icon iconfont">&#xe6e9;</span>恢复矿机数据</div>
+    </div> -->
+
+  </div>
+</section>
+<script src="js/echarts.js"></script>
+<script src="js/index.js"></script>
+
+</body>
+</html>
