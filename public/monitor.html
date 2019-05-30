@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>矿场监控中心</title>
+  <title>机房监控中心</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="./css/index.css">
   <link rel="stylesheet" href="fonts/iconfont.css">
@@ -17,7 +17,7 @@
 <body class="bg-body">
 <!-- 一：头部 矿场监控中心 -->
 <div class="nav-top">
-  <div class="nav-center"><h2 class="h2">矿场监控中心</h2><p>Ebang mine data monitoring center</p></div>
+  <div class="nav-center"><h2 class="h2">机房监控中心</h2><p>Ebang mine data monitoring center</p></div>
 </div>
 <!-- 二：内容 汇总数据 和 详细数据 -->
 <section class="section">
@@ -29,7 +29,8 @@
     </div>
     <div class="item-panel-right">
         <p>活跃数/总数</p>
-        <div class="color-yel"><span class="number" id="activeNum">2650</span>/<span>86654</span></div>
+        <div class="color-yel" id="oneBlock"><div><span class="number" id="activeNum">2650</span>/<span class="number" id="allNum">86654</span></div></div>
+        <span class="text-tip" style="left:248px;">在线率:<em id="online">92.2%</em></span>
     </div>
   </div>
   <div class="item-panel mcenter clear">
@@ -38,7 +39,7 @@
     </div>
     <div class="item-panel-right">
         <p>实时算力/标准算力(T)</p>
-        <div class="color-sky">126/8954</div>
+        <div class="color-sky"><span class="number" id="realTime">260</span>/<span class="number" id="allcal">8654</span></div><span class="text-tip" style="right:360px;">达标率:<em id="goodvol">92.2%</em></span>
     </div>
   </div>
   <div class="item-panel right mr0">
@@ -47,7 +48,7 @@
     </div>
     <div class="item-panel-right">
         <p>故障总数/故障率</p>
-        <div class="color-org">8954/1.26%</div>
+        <div class="color-org"><span class="number" id="badall">2650</span>/<span class="number" id="badvol">1.26</span>%</div>
     </div>
   </div>
  
@@ -56,7 +57,8 @@
     <!-- 2-2-1、故障数据饼图 堆叠图 -->
     <div class="data-model model-left left">
       <div class="model-title"><span class="icon iconfont">&#xeb95;</span>告警类型统计</div>
-      <div id="echarts01" style="width:240px;height:260px;top:10%;"></div>
+      <div id="echarts01title" class="echart-tips"></div>
+      <div id="echarts01" style="width:270px;height:280px;top:40px;"></div>
     </div>
 
     <!-- 2-2-2、异常设备表格 -->
@@ -69,68 +71,43 @@
             <th>告警类型</th>
             <th>告警时间</th>
             <th>消警时间</th>
-
           </thead>
-          <tbody>
-            <tr>
+          <tbody class="fs14" id="modelData">
+            <tr class="tr-error">
               <td>192.168.80.201</td>
               <td>算力异常</td>
-              <td>5/29 15:54:35</td>
-              <td>5/29 15:54:35</td>
+              <td>05-29 15:54:35</td>
+              <td>--</td>
             </tr>
-            <tr>
+            <tr class="tr-ok">
               <td>192.168.80.69</td>
-              <td>算力异常</td>
-              <td>5/29 15:54:35</td>
-              <td>5/29 15:54:35</td>
+              <td>算力异常恢复</td>
+              <td>05-29 15:54:35</td>
+              <td>05-29 15:54:35</td>
             </tr>
-            <tr>
-              <td>192.168.80.54</td>
-              <td>算力异常</td>
-              <td>2019-5-29 15:54:35</td>
-              <td>2019-5-29 15:54:35</td>
-            </tr>
-            <tr>
+            <tr class="tr-error">
               <td>192.168.80.201</td>
               <td>算力异常</td>
-              <td>2019-5-29 15:54:35</td>
-              <td>2019-5-29 15:54:35</td>
+              <td>05-29 15:54:35</td>
+              <td>--</td>
             </tr>
-            <tr>
-              <td>192.168.80.69</td>
-              <td>算力异常</td>
-              <td>2019-5-29 15:54:35</td>
-              <td>2019-5-29 15:54:35</td>
-            </tr>
-            <tr>
-              <td>192.168.80.54</td>
-              <td>算力异常</td>
-              <td>2019-5-29 15:54:35</td>
-              <td>2019-5-29 15:54:35</td>
-            </tr>
-            <tr>
-              <td>192.168.80.54</td>
-              <td>算力异常</td>
-              <td>2019-5-29 15:54:35</td>
-              <td>2019-5-29 15:54:35</td>
-            </tr>
-            <tr>
+            <tr class="tr-ok">
               <td>192.168.80.201</td>
               <td>算力异常</td>
-              <td>2019-5-29 15:54:35</td>
-              <td>2019-5-29 15:54:35</td>
+              <td>05-29 15:54:35</td>
+              <td>--</td>
             </tr>
-            <tr>
-              <td>192.168.80.69</td>
+            <tr class="tr-error">
+              <td>192.168.80.201</td>
               <td>算力异常</td>
-              <td>2019-5-29 15:54:35</td>
-              <td>2019-5-29 15:54:35</td>
+              <td>05-29 15:54:35</td>
+              <td>05-29 15:54:35</td>
             </tr>
-            <tr>
-              <td>192.168.80.54</td>
+            <tr class="tr-ok">
+              <td>192.168.80.201</td>
               <td>算力异常</td>
-              <td>2019-5-29 15:54:35</td>
-              <td>2019-5-29 15:54:35</td>
+              <td>05-29 15:54:35</td>
+              <td>05-29 15:54:35</td>
             </tr>
           </tbody>
         </table>
@@ -145,6 +122,7 @@
   </div>
 </section>
 <script src="js/echarts.js"></script>
+<script src="js/jquery.leoTextAnimate.js"></script>
 <script src="js/index.js"></script>
 
 </body>
