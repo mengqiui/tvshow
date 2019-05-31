@@ -85,13 +85,14 @@ table {
 	font-size: 15px;left: 20%;line-height: 30px;text-align: center;}
 .data-model .model-title .icon{padding-right:3px;}
 .data-model .model-body{overflow: hidden;margin-top:15px;height:90%;}
-.data-model .model-body table{width: 100%;border-collapse: collapse;text-align: center;}
+.data-model .model-body table{border-collapse: collapse;text-align: center;width: 94%;margin: auto;}
 .data-model .model-body table thead th{ color: #61d2f7;font-size: 14px;font-weight: 600; padding: 10px 0;}
 .data-model .model-body table tbody td{ color:#fff;padding:2%;}
-.data-model .model-body table tbody tr:nth-child(2n+1){background-color: #072951;box-shadow: -10px 0px 15px #034c6a inset, 10px 0px 15px #034c6a inset;}
+/* .data-model .model-body table tbody tr:nth-child(2n+1){background-color: #072951;box-shadow: -10px 0px 15px #034c6a inset, 10px 0px 15px #034c6a inset;} */
 
 .text-tip{ color:#a9a1a1;position:absolute;font-size:10px;top: 150px;}
 
 .data-model .model-body table tbody .tr-ok td{color:#32cd32;}
 .data-model .model-body table tbody .tr-error td{color:#ff4e4e;}
 .echart-tips{ position: absolute;top: 35%;left:38%;font-size:18px;font-weight: 700;}
+.tableid_ thead tr td{opacity:0;}

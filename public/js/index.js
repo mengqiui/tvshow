@@ -1,8 +1,22 @@
 $(function () {
   echart01();
   tableAjax(tableInterval);
-  setInterval(blockData, 5000);
+  setInterval(function(){
+    blockData();
+    // $(".number").each(function(){
+    //   var arr = new Array(6);
+    //   arr.push($(this).prop("id"));
+    //   console.log(arr)
+    // })
+    $("#activeNum").leoTextAnimate({delay: 10, autorun: true, start: ''},"#activeNum")
+    $("#allNum").leoTextAnimate({delay: 10, autorun: true, start: ''},"#allNum");
+    $("#realTime").leoTextAnimate({delay: 10, autorun: true, start: ''},"#realTime");
+    $("#allcal").leoTextAnimate({delay: 10, autorun: true, start: ''},"#allcal");
+    $("#badall").leoTextAnimate({delay: 10, autorun: true, start: ''},"#badall");
+    $("#badvol").leoTextAnimate({delay: 10, autorun: true, start: ''},"#badvol");
+  },5000)
 })
+
 function echart01() {
   var myChart = document.getElementById('echarts01');
   var domtitle = document.getElementById("echarts01title");
@@ -99,7 +113,8 @@ function tableInterval(){
   }
   var count = $("#modelData tr").length;
   if(count > 6){
-    $("#modelData tr:first").remove();
+    // 参数1 tableID,参数2 div高度，参数3 速度，参数4 插入数据长度
+    tableScroll('tableId', 250, 30, 1)
   };
   $("#modelData").append(strHtml);
   
@@ -120,15 +135,16 @@ var tableAjax = function(callbackFn){
       <td>05-29 15:54:35</td>
     </tr>
   `;
-  $("#modelData").html(strHtml);
+  $("#modelData").html(strHtml+strHtml);
   if (callbackFn) setInterval(callbackFn, 5000); 
+  
   
 }
 
 //三小块数据刷新
 function blockData(){
   var data = {
-    "one":[{"activeNum":5500,"allNum":6000},{"activeNum":2000,"allNum":3200},{"activeNum":3200,"allNum":5800},{"activeNum":1200,"allNum":6600},{"activeNum":3500,"allNum":6600},{"activeNum":5000,"allNum":6600}],
+    "one":[{"activeNum":5500,"allNum":6000},{"activeNum":2060,"allNum":3200},{"activeNum":3224,"allNum":5800},{"activeNum":1200,"allNum":6603},{"activeNum":3532,"allNum":6600},{"activeNum":5000,"allNum":6600}],
     "two":[{"realTime":300,"allcal":600},{"realTime":260,"allcal":320},{"realTime":86,"allcal":100},{"realTime":120,"allcal":240},{"realTime":66,"allcal":100},{"realTime":87,"allcal":125}],
     "three":[{"badvol":56,"badall":895},{"badvol":2,"badall":200},{"badvol":40,"badall":400},{"badvol":20,"badall":600},{"badvol":20,"badall":600},{"badvol":20,"badall":600}],
   }
@@ -137,7 +153,6 @@ function blockData(){
 
   $("#activeNum").text(data.one[index].activeNum);
   $("#allNum").text(data.one[index].allNum);
-  // $("#oneBlock").append('<div><span class="number1" id="activeNum">'+data.one[index].activeNum+'</span>/<span id="allNum">'+data.one[index].allNum+'</span></div>');
 
   if(data.one[index].activeNum<4200){$("#activeNum").css("color","#ff4e4e")}
   else if(data.one[index].activeNum>5400){$("#activeNum").css("color","#32cd32")}
@@ -151,13 +166,70 @@ function blockData(){
 
   $("#badall").text(data.three[index].badall);
   $("#badvol").text(data.three[index].badvol);
-  if(data.three[index].badvol<50){$("#badvol").css("color","#ff4e4e")}
-  else if(data.three[index].badvol>50){$("#badvol").css("color","#32cd32")}
+  if(data.three[index].badvol<50){$("#badvol,.numberpei").css("color","#ff4e4e")}
+  else if(data.three[index].badvol>50){$("#badvol,.numberpei").css("color","#32cd32")}
+}
 
-  $('.number').leoTextAnimate({delay: 10, autorun: true, start: '0'});
+var MyMarhq;
 
+function tableScroll(tableid, hei, speed, len) {
+    clearTimeout(MyMarhq);
+    $('#' + tableid).parent().find('.tableid_').remove()
+    $('#' + tableid).parent().prepend(
+        '<table class="tableid_"><thead>' + $('#' + tableid + ' thead').html() + '</thead></table>'
+    ).css({
+        'position': 'relative',
+        'overflow': 'hidden',
+        'height': hei + 'px'
+    })
+    $(".tableid_").find('th').each(function(i) {
+        $(this).css('width', $('#' + tableid).find('th:eq(' + i + ')').width());
+    });
+    $(".tableid_").css({
+        'position': 'absolute',
+        'top': 0,
+        'left': 0,
+        'z-index': 9
+    })
+    $('#' + tableid).css({
+        'position': 'absolute',
+        'top': 0,
+        'left': 0,
+        'z-index': 1
+    })
 
+    // if ($('#' + tableid).find('tbody tr').length > len) {
+    $('#' + tableid).find('tbody').html($('#' + tableid).find('tbody').html() + $('#' + tableid).find('tbody').html());
+    $(".tableid_").css('top', 0);
+    $('#' + tableid).css('top', 0);
+    var tblTop = 0;
+    var outerHeight = $('#' + tableid).find('tbody').find("tr").outerHeight();
+
+    function Marqueehq() {
+        if (tblTop <= -outerHeight * $('#' + tableid).find('tbody').find("tr").length) {
+            tblTop = 0;
+        } else {
+            tblTop -= 1;
+        }
+        $('#' + tableid).css('margin-top', '-'+(len*36) + 'px');
+        clearTimeout(MyMarhq);
+        MyMarhq = setTimeout(function() {
+            Marqueehq()
+        }, speed);
+    }
+
+    MyMarhq = setTimeout(Marqueehq, speed);
+    $('#' + tableid).find('tbody').hover(function() {
+        clearTimeout(MyMarhq);
+    }, function() {
+        clearTimeout(MyMarhq);
+        // if ($('#' + tableid).find('tbody tr').length > len) {
+        //     MyMarhq = setTimeout(Marqueehq, speed);
+        // }
+    })
+    // }
 
 }
+
 
 

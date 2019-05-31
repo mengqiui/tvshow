@@ -1,5 +1,5 @@
 ;(function($, window, document, undefined) {
-	var leoTextAnimate = function(eles, opts) {
+	function leoTextAnimate(eles, opts) {
 		this.element = $(eles);
 		this.string = $(eles).html();
 		this.defaults = {
@@ -9,27 +9,23 @@
 			fixed: '',
 			start: ''
 		};
-		console.log(this.string);
 		this.options = $.extend({}, this.defaults, opts);
 		this.height = $(eles).height();
 	}
 	leoTextAnimate.prototype = {
-		init: function() {
+		init: function(elm) {
 			if (this.element.find('.TextAnimate').length <= 0) {
-				var html = method.getHtml(this.options, this.string);
+				// var html = method.getHtml(this.options, this.string);
+				var html = method.getHtml(this.options,$(elm).text())
 				this.element.html(html);
 			}
 			this.reset();
-			//debugger;
 			if (this.options.autorun) {
 				if (this.options.delay == 0) {
 					this.run();
 				} else {
 					var $this = this;
-					setTimeout(function() {
-						$this.run();
-					},
-					this.options.delay);
+					setTimeout(function(){$this.run();},this.options.delay);
 				}
 			}
 		},
@@ -179,7 +175,7 @@
 			return false;
 		}
 	}
-	$.fn.leoTextAnimate = function(options) {
+	$.fn.leoTextAnimate = function(options,elm) {
 		$(this).each(function(){
 			var plugin = $._data(this, "leoTextAnimate");
 			if(!plugin){
@@ -190,7 +186,7 @@
 			if (plugin[options]) {
 				return plugin[options].apply(plugin, Array.prototype.slice.call(arguments, 1));
 			} else if (typeof options === 'object' || !options) {
-				return plugin.init();
+				return plugin.init(elm)
 			} else {
 				$.error('Method ' + options + ' does not exist on jQuery.leoTextAnimate');
 			}
