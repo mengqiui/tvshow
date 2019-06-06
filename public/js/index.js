@@ -1,33 +1,10 @@
 $(function () {
   echart01();
-  var idArr = [];
-  var array =  $(".number").toArray();
-  var str = '';
+  var array =  $(".number").toArray(),str = '';
   array.forEach(function(val){
     str +='$("#'+$(val).attr("id")+'").leoTextAnimate({ delay: 10, autorun: true, start: "" }, "#'+$(val).attr("id")+'");';
-    idArr.concat(idArr.push($(val).attr("id")))
   })
-  setInterval((function(){
-    return function(){
-      // console.log(str);
-      eval(str);
-      blockData(); tableInterval();
-    }
-  })(str),1000);
-
-  // setInterval(function () {
-  //   blockData(); tableInterval();
-
-    // $("#activeNum").leoTextAnimate({ delay: 10, autorun: true, start: '' }, "#activeNum")
-    // $("#allNum").leoTextAnimate({ delay: 10, autorun: true, start: '' }, "#allNum");
-    // $("#realTime").leoTextAnimate({ delay: 10, autorun: true, start: '' }, "#realTime");
-    // $("#allcal").leoTextAnimate({ delay: 10, autorun: true, start: '' }, "#allcal");
-    // $("#badall").leoTextAnimate({ delay: 10, autorun: true, start: '' }, "#badall");
-    // $("#badvol").leoTextAnimate({ delay: 10, autorun: true, start: '' }, "#badvol");
-  // }, 1000)
-
-
-
+  setInterval((function(){return function(){blockData(); tableInterval();eval(str);}})(str),5000);
 
 })
 

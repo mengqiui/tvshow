@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>机房监控中心</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="fonts/iconfont.css">
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <script src="js/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+</head>
+
+<body class="bg-body">
+  <!-- 一：头部 矿场监控中心 -->
+  <div class="nav-top">
+    <div class="nav-center">
+      <h2 class="h2">机房选项</h2>
+      <p>Ebang mine data monitoring center</p>
+    </div>
+  </div>
+  <!-- 二：内容 汇总数据 和 详细数据 -->
+  <section class="section">
+    <!-- 弹性盒子 -->
+    <div class="enter-box" id="siteBox">
+      <div class="enter-item" onclick="location.href='monitor.html'">site002</div>
+    </div>
+  </section>
+
+  <script>
+    Axios.defaults.baseURL = '/api'
+    Axios.defaults.headers.post['Content-Type'] = 'application/json';
+    var vm = new Vue({
+      el: "siteBox",
+      data: {
+        list: []
+      },
+      mounted() {
+        axios({
+          method: 'get',
+          url: 'http://124.160.26.251:8090/minerRoom/querySiteList',
+        }).then(function (data) {
+          console.log(data)
+        });
+      }
+    })
+  </script>
+</body>
+
+</html>

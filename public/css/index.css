@@ -96,3 +96,12 @@ table {
 .data-model .model-body table tbody .tr-error td{color:#ff4e4e;}
 .echart-tips{ position: absolute;top: 38%;left:38%;font-size:18px;font-weight: 700;}
 .tableid_ thead tr td{opacity:0;}
+
+
+.enter-box{display: flex;display: -webkit-flex; /* Safari */ justify-content: flex-start;width:900px;margin: auto;flex-wrap: wrap;}
+.enter-box .enter-item{height: 90px;width:200px;text-align: center;font-size:28px;line-height:90px;color: #ddd;cursor: pointer; box-shadow: -10px 0px 15px #034c6a inset, 
+	0px -10px 15px #034c6a inset, 10px 0px 15px #034c6a inset, 0px 10px 15px #034c6a inset;border: 1px solid #034c6a;margin:0 20px 20px 0;}
+.enter-box .enter-item:hover,.enter-box .enter-item:active{color:#fff;opacity: .6;background-color: #063e5c;}
+
+
+
