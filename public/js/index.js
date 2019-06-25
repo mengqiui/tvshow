@@ -1,21 +1,32 @@
 $(function () {
-  echart01();
-  var array =  $(".number").toArray(),str = '';
-  array.forEach(function(val){
-    str +='$("#'+$(val).attr("id")+'").leoTextAnimate({ delay: 10, autorun: true, start: "" }, "#'+$(val).attr("id")+'");';
-  })
-  setInterval((function(){return function(){blockData(); tableInterval();eval(str);}})(str),5000);
+  var nameObj = JSON.parse(localStorage.getItem('userList'));
+  $("#siteName1").text(nameObj[localStorage.getItem('roomNum')].sname+'机房监控中心');
+  
+  blockData();echart01(); tableInterval();
+  
+  setInterval(function(){
+	  var n = localStorage.getItem('roomNum');++n;
+	  if(n >= nameObj.length){n=0;}; 
+	  localStorage.setItem('roomNum',n);
+	  location.reload(true);   
+  },1000*60*1);//1分钟
 
 })
 
-function echart01() {
+setInterval(function(){blockData();echart01(); tableInterval();},1000*60*0.5);//30秒
+
+var etimer, MyMarhq;
+
+//饼图
+function echart01() {	
+	clearInterval(etimer);
   var myChart = document.getElementById('echarts01');
   var domtitle = document.getElementById("echarts01title");
   var myindex = 0;
-  var mycolor = ['#ff7f50', '#87cefa', '#da70d6', '#32cd32', '#25f3e6'];
+  var mycolor = ['#ff7f50', '#87cefa', '#da70d6', '#168039', '#cccc0f'];
   function DrawPieArea(drawdom, piedata, color, curIndex, titleDom) {
     var option = {
-      color: color,
+      stillShowZeroSum:false,
       series: [{
         type: 'pie',
         radius: ['50%', '80%'],
@@ -37,8 +48,11 @@ function echart01() {
           }
         },
         labelLine: { normal: { show: false } },
-        data: piedata
-      }]
+        data: piedata,
+        silent:true,
+        animationType:'scale',
+        animationEasing:'quarticIn'
+      }],
     };
     var chart_pie = echarts.init(drawdom);
     chart_pie.setOption(option, true);
@@ -46,34 +60,34 @@ function echart01() {
       chart_pie.dispatchAction({ type: 'highlight', seriesIndex: 0, dataIndex: 0 });
       if (titleDom) {
         titleDom.text = piedata[0].name;
-        titleDom.style.color = color[0];
+        titleDom.style.color = piedata[0].itemStyle.normal.color;
       }
     } else {
       chart_pie.dispatchAction({ type: 'highlight', seriesIndex: 0, dataIndex: curIndex });
       if (titleDom) {
         titleDom.innerHTML = piedata[curIndex].name;
-        titleDom.style.color = color[curIndex];
+        titleDom.style.color = piedata[curIndex].itemStyle.normal.color;
       }
-      setInterval(function () {
+      etimer = setInterval(function () {
         var dataLen = piedata.length;
         // 取消高亮
         chart_pie.dispatchAction({ type: 'downplay', seriesIndex: 0, dataIndex: curIndex });
         curIndex = (curIndex + 1) % dataLen;
         if (titleDom) {
           titleDom.innerHTML = piedata[curIndex].name;
-          titleDom.style.color = color[curIndex];
+          titleDom.style.color = piedata[curIndex].itemStyle.normal.color;
         }
         //设置高亮
         chart_pie.dispatchAction({ type: 'highlight', seriesIndex: 0, dataIndex: curIndex });
-      }, 2000);
+      }, 500);
     }
   }
   var data = [
-    { value: 335, name: '算力告警' },
-    { value: 310, name: '风扇告警' },
-    { value: 234, name: '温度告警' },
-    { value: 135, name: '网络告警' },
-    { value: 1548, name: '板卡告警' }
+    { value: 335, name: '算力告警' , itemStyle : { normal : { color : mycolor[0] } } },
+    { value: 310, name: '风扇告警' , itemStyle : { normal : { color : mycolor[1] } } },
+    { value: 234, name: '温度告警' , itemStyle : { normal : { color : mycolor[2] } } },
+    { value: 135, name: '网络告警' , itemStyle : { normal : { color : mycolor[3] } } },
+    { value: 1548, name: '板卡告警' , itemStyle : { normal : { color : mycolor[4] } } }
   ];
   DrawPieArea(myChart, data, mycolor, myindex, domtitle);
 }
@@ -102,67 +116,20 @@ function tableInterval() {
       </tr>
     `;
   }
-  var count = $("#modelData tr").length;
 
-  if (count >= 7) {
-    // 参数1 tableID,参数2 div高度，参数3 速度，参数4 插入数据长度
-    tableScroll('tableId', 270, 20, 1, strHtml)//先按照插入一条测
-  } else {
+  var count = 1;//插入数据长度
+  $(".firstno").remove();
+  var allLen = $("#modelData tr").length + count;
+  // console.log('基础:'+$("#modelData tr").length);
+  // console.log('插入:'+count);
+  if (allLen > 7 ) {
+      //参数1 tableID,参数2 div高度，参数4  插入数据长度 参数5 数据模板
+    tableScroll('tableId', 270, allLen, strHtml)
+  }else if(allLen > 1){
     $("#modelData").append(strHtml);
-  };
-
-}
-
-//表格初始数据获取
-var tableAjax = function (callbackFn) {
-  var strHtml = `
-    <tr class="tr-error">
-      <td>192.168.80.201</td>
-      <td>算力异常a</td>
-      <td>05-29 15:54:35</td>
-      <td>--</td>
-    </tr>
-    <tr class="tr-ok">
-      <td>192.168.80.69</td>
-      <td>算力异常恢复b</td>
-      <td>05-29 15:54:35</td>
-      <td>05-29 15:54:35</td>
-    </tr>
-    <tr class="tr-error">
-      <td>192.168.80.201</td>
-      <td>算力异常c</td>
-      <td>05-29 15:54:35</td>
-      <td>--</td>
-    </tr>
-    <tr class="tr-ok">
-      <td>192.168.80.69</td>
-      <td>算力异常恢复d</td>
-      <td>05-29 15:54:35</td>
-      <td>05-29 15:54:35</td>
-    </tr>
-    <tr class="tr-error">
-      <td>192.168.80.201</td>
-      <td>算力异常e</td>
-      <td>05-29 15:54:35</td>
-      <td>--</td>
-    </tr>
-    <tr class="tr-ok">
-      <td>192.168.80.69</td>
-      <td>算力异常恢复f</td>
-      <td>05-29 15:54:35</td>
-      <td>05-29 15:54:35</td>
-    </tr>
-    <tr class="tr-ok">
-      <td>192.168.80.69</td>
-      <td>算力异常恢复f</td>
-      <td>05-29 15:54:35</td>
-      <td>05-29 15:54:35</td>
-    </tr>
-  `;
-  $("#modelData").html(strHtml);
-  // if (callbackFn) setInterval(callbackFn, 300);
-
-
+  }else{
+    $("#modelData").append(strHtml);
+  }
 }
 
 //三小块数据刷新
@@ -192,11 +159,15 @@ function blockData() {
   $("#badvol").text(data.three[index].badvol);
   if (data.three[index].badvol < 50) { $("#badvol,.numberpei").css("color", "#ff4e4e") }
   else if (data.three[index].badvol > 50) { $("#badvol,.numberpei").css("color", "#32cd32") }
+
+  var array =  $(".number").toArray(),str = '';
+  array.forEach(function(val){
+    str +='$("#'+$(val).attr("id")+'").leoTextAnimate({ delay: 10, autorun: true, start: "" }, "#'+$(val).attr("id")+'");';
+  })
 }
 
-var MyMarhq;
-
-function tableScroll(tableid, hei, speed, len, content) {
+//表格数据滚动效果
+function tableScroll(tableid, hei, len, content) {
   clearTimeout(MyMarhq);
   $('#' + tableid).parent().find('.tableid_').remove()
   $('#' + tableid).parent().prepend(
@@ -229,29 +200,31 @@ function tableScroll(tableid, hei, speed, len, content) {
   var outerHeight = $('#' + tableid).find('tbody').find("tr").outerHeight();
   
   function Marqueehq() {
-    if (tblTop <= -outerHeight * len) {
+    if (tblTop <= -34 * (len-7)) {
       tblTop = 0;
     } else {
-      tblTop -= 1;
+      tblTop = tblTop - 1;
     }
     $('#' + tableid).css('margin-top', tblTop + 'px');
+	  //console.log(tblTop,-34 * (len-7));
     MyMarhq = setTimeout(function () {
       Marqueehq();
       if($('#' + tableid).css('margin-top') == "0px"){
-        $('#' + tableid).find('tbody tr:lt('+len+')').remove();
+    	  //console.log($('#' + tableid).find('tbody tr:lt('+len+')'));
+        $('#' + tableid).find('tbody tr:lt('+(len-7)+')').remove();
         clearTimeout(MyMarhq);
       }
-    }, speed);
+    }, 100);
   }
 
-  MyMarhq = setTimeout(function(){Marqueehq();}, speed);
+  MyMarhq = setTimeout(function(){Marqueehq();}, 50 * (len-7));
 
   $('#' + tableid).find('tbody').hover(function () {
     clearTimeout(MyMarhq);
   }, function () {
     clearTimeout(MyMarhq);
     if ($('#' + tableid).find('tbody tr').length > len) {
-      MyMarhq = setTimeout(Marqueehq, speed);
+      MyMarhq = setTimeout(Marqueehq, 50 * (len-7));
     }
   })
 

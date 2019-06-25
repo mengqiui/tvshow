@@ -46,7 +46,7 @@ table {
 /* project css */
 .bg-body{ background-color:#081832; }
 .nav-top{ height:55px;width:100%;background-color:#030829; }
-.nav-top .nav-center{ width:30%;height:100%;margin:0 auto;color:#fff;text-align: center;background-image:url(../img/logoBg.png);background-size: 100% 100%; }
+.nav-top .nav-center{ width:40%;height:100%;margin:0 auto;color:#ddd;text-align: center;background-image:url(../img/logoBg.png);background-size: 100% 100%; }
 .nav-center h2{padding:8px 0 5px 0;}
 .nav-center p{font-size:10px;}
 .h2{ font-size:17px;}
@@ -58,7 +58,7 @@ table {
 .mcenter-data{margin:0 24.6px;}
 .fs60{font-size:60px !important;}
 .fs14{font-size: 14px;}
-
+.m5{margin:0 5px;}
 
 
 .section{ width:90%;margin:20px auto 0 auto; }
@@ -69,8 +69,8 @@ table {
 .item-panel .item-panel-left .icon{font-size:65px;}
 .item-panel .item-panel-right{width:68%;display: inline-block;text-align: center;}
 
-.item-panel .item-panel-right p{ color:#fff;font-size:15px;padding-bottom: 6px; }
-.item-panel .item-panel-right div{ font-size: 28px;font-weight: 600;}
+.item-panel .item-panel-right p{ color:#ddd;font-size:15px;padding-bottom: 6px; }
+.item-panel .item-panel-right div{ font-size: 26px;font-weight: 600;}
 
 .color-yel{color:#ffff43;}
 .color-sky{color:#25f3e6;}
@@ -81,7 +81,7 @@ table {
 0px 10px 15px #034c6a inset;border: 1px solid #034c6a;box-sizing: border-box; position: relative;}
 .model-left{width:32%;}
 .model-right{width:66%;}
-.data-model .model-title{background-color: #034c6a;border-radius: 18px;position: absolute;height: 30px;	width: 55%;top: -15px;color: #ffffff;
+.data-model .model-title{background-color: #034c6a;border-radius: 18px;position: absolute;height: 30px;	width: 55%;top: -15px;color: #ddd;
 	font-size: 15px;left: 20%;line-height: 30px;text-align: center;}
 .data-model .model-title .icon{padding-right:3px;}
 .data-model .model-body{overflow: hidden;margin-top:15px;height:90%;}
@@ -90,7 +90,7 @@ table {
 .data-model .model-body table tbody td{ color:#fff;padding:2%;}
 .data-model .model-body table tbody tr:nth-child(2n+1){background-color: #072951;box-shadow: -10px 0px 15px #034c6a inset, 10px 0px 15px #034c6a inset;}
 .tableid_{text-align: center;width: 94%;margin: auto;background-color: #034c6a;}
-.text-tip{ color:#a9a1a1;position:absolute;font-size:10px;top: 150px;}
+.text-tip{ color:#ff4e4e;position:absolute;top: 150px;font-weight: bold;font-size: 12px;}
 
 .data-model .model-body table tbody .tr-ok td{color:#32cd32;}
 .data-model .model-body table tbody .tr-error td{color:#ff4e4e;}
@@ -99,9 +99,26 @@ table {
 
 
 .enter-box{display: flex;display: -webkit-flex; /* Safari */ justify-content: flex-start;width:900px;margin: auto;flex-wrap: wrap;}
-.enter-box .enter-item{height: 90px;width:200px;text-align: center;font-size:28px;line-height:90px;color: #ddd;cursor: pointer; box-shadow: -10px 0px 15px #034c6a inset, 
-	0px -10px 15px #034c6a inset, 10px 0px 15px #034c6a inset, 0px 10px 15px #034c6a inset;border: 1px solid #034c6a;margin:0 20px 20px 0;}
-.enter-box .enter-item:hover,.enter-box .enter-item:active{color:#fff;opacity: .6;background-color: #063e5c;}
+.enter-box .enter-item{height: 90px;width:200px;overflow: hidden;text-align: center;font-size:28px;line-height:90px;color: #ddd;cursor: pointer; border: 1px solid #034c6a;box-shadow: 0px 0px 60px #034c6a inset;margin:0 20px 20px 0;}
+/* .enter-box .enter-item.active {color: #cec908;box-shadow: 0px 0px 70px #cec908 inset;border: 1px solid #4a4918; } */
+.enter-text{width:90%;margin: 0 10px;overflow: hidden; white-space: nowrap;text-overflow: ellipsis;}
+.enter-box .enter-item.active{color:#cec908;box-shadow:5px 2px 9px #cec91e inset, 2px 2px 9px #cec91e inset, 2px -4px 9px #cec91e inset, -4px -2px 9px #cec91e inset;border: 1px solid #cec908;}
+
+.enter-room{position:absolute;top: 8px;right: 50px;background-color: #032e4d;color: #ddd;border: 0;outline: none;width: 100px;height: 40px;font-size: 16px;border-radius: 3px;line-height: 40px;cursor: pointer;}
+.enter-room:hover,.enter-room:active{background-color: transparent;color: #ddd;box-shadow:-2px -2px 6px #032e4d, 2px -2px 2px #032e4d, 2px 2px 2px #032e4d, -2px 2px 6px #032e4d;}
+
+/* 电视弹框 */
+.tv-alert{position:fixed;top:0;width:100%;height:100%;z-index:9999;background-color:#ffffff54;}
+.tv-mask{position: absolute;width: 300px;height: 100px;background-color: #fff;border-radius: 6px;top:-50px;left:-150px;margin-left: 50%;margin-top: -50px;text-align: center;}
+    
+.tv-mask strong{font-size: 25px;line-height: 100px;color:#b55f5a;}
+.tv-mask strong i{font-size: 35px;margin-right:6px;vertical-align: middle;}
+
+
+
+
+
+
 
 
 

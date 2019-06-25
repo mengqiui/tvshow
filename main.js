@@ -9,7 +9,7 @@ var cp = require('child_process');
 //创建服务
 var httpServer = http.createServer(processRequest);
 // 这是端口号
-var port = 80;
+var port = 8081;
 
 //指定一个监听的接口
 httpServer.listen(port, function () {
@@ -97,8 +97,8 @@ function processRequest(request, response) {
           var flag = false;
           for (var file of files) {
             //如果在目录下找到monitor.html，直接读取这个文件
-            if (file === "monitor.html") {
-              readFile(filePath + (filePath[filePath.length - 1] == '/' ? '' : '/') + 'monitor.html', "text/html");
+            if (file === "index.html") {
+              readFile(filePath + (filePath[filePath.length - 1] == '/' ? '' : '/') + 'index.html', "text/html");
               flag = true;
               break;
             };

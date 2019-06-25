@@ -18,21 +18,57 @@
 <!-- 一：头部 矿场监控中心 -->
 <div class="nav-top">
   <div class="nav-center"><h2 class="h2">机房选项</h2><p>Ebang mine data monitoring center</p></div>
+  <button type="button" class="enter-room" onclick="goIndex()">点击进入</button>
 </div>
 <!-- 二：内容 汇总数据 和 详细数据 -->
 <section class="section">
   <!-- 弹性盒子 -->
-  <div class="enter-box">
-    <div class="enter-item" onclick="location.href='monitor.html'">site002</div>
-    <div class="enter-item">site002</div>
-    <div class="enter-item">site002</div>
-    <div class="enter-item">site002</div>
-    <div class="enter-item">site002</div>
-    <div class="enter-item">site002</div>
-    <div class="enter-item">site002</div>
+  <div class="enter-box" id="enterList">
+    <div class="enter-item" data-sitename="site001" data-username="user001" onclick="swichClass(this)"><div class="enter-text">site001</div></div>
+    <div class="enter-item" data-sitename="site002" data-username="user002" onclick="swichClass(this)"><div class="enter-text">site002</div></div>
+    <div class="enter-item" data-sitename="site003" data-username="user003" onclick="swichClass(this)"><div class="enter-text">site003</div></div>
+    <div class="enter-item" data-sitename="site004" data-username="user004" onclick="swichClass(this)"><div class="enter-text">site004</div></div>
+    <div class="enter-item" data-sitename="site005" data-username="user005" onclick="swichClass(this)"><div class="enter-text">site005</div></div>
+    <div class="enter-item" data-sitename="site006" data-username="user006" onclick="swichClass(this)"><div class="enter-text">site006</div></div>
+    <div class="enter-item" data-sitename="site007" data-username="user007" onclick="swichClass(this)"><div class="enter-text">site007</div></div>
   </div>
 </section>
 
+<script>
+function goIndex(){
+	var elms = $("#enterList .enter-item.active");
+	var etJson = '[';
+	if(elms.length > 0){
+		elms.each(function(i){
+			etJson += '{"uname":"'+$(this).data("username")+'","sname":"'+$(this).data("sitename")+'"},'
+		})
+		var jsonStr = etJson.substr(0,etJson.length-1)+']';
+		localStorage.setItem('userList',jsonStr);localStorage.setItem('roomNum',0);
+		location.href="monitor.html";
+	}else{
+		tvmsg('请选择机房！',1500);
+	}
 
+}
+
+function swichClass(elm){$(elm).toggleClass("active");}
+
+function tvmsg(msg,time){
+	$("body").append('<div class="tv-alert" id="alertbox"><div class="tv-mask"><strong id="msg"><i class="icon iconfont">&#xe643;</i>'+msg+'</strong></div></div>');
+	$("#alertbox .tv-mask").animate({top: '50%'}, "slow");
+	setTimeout(function(){$("#alertbox .tv-mask").animate({top: '-50px'}, "100",function(){$("#alertbox").remove();});},time);
+}
+
+(function(){
+	if(window.localStorage){
+		console.log("localStorage剩余空间:"+((1024 * 1024 * 5 - unescape(encodeURIComponent(JSON.stringify(localStorage))).length) / 1024).toFixed(2) + 'KB');
+  }
+  if(localStorage.getItem("userList")){
+      var ulist = JSON.parse(localStorage.getItem('userList'));
+      $.each(ulist,function(i,val){$("#enterList .enter-text:contains('"+ulist[i].sname+"')").parent().addClass("active")})
+    }
+})()
+
+</script>
 </body>
 </html>
