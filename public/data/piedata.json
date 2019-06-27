@@ -1,0 +1,35 @@
+{
+  "code": 10000,
+  "content": {
+    "alarm5": {
+      "alarmTypeDec": "板卡漏电",
+      "alarmType": "5",
+      "alarmNum": 92,
+      "percentage": "12.25%"
+    },
+    "alarm2": {
+      "alarmTypeDec": "算力告警",
+      "alarmType": "2",
+      "alarmNum": 570,
+      "percentage": "75.9%"
+    },
+    "alarm1": {
+      "alarmTypeDec": "网络告警",
+      "alarmType": "1",
+      "alarmNum": 34,
+      "percentage": "4.53%"
+    },
+    "alarm4": {
+      "alarmTypeDec": "风扇告警",
+      "alarmType": "4",
+      "alarmNum": 0,
+      "percentage": "0.0%"
+    },
+    "alarm3": {
+      "alarmTypeDec": "温度告警",
+      "alarmType": "3",
+      "alarmNum": 55,
+      "percentage": "7.32%"
+    }
+  }
+}

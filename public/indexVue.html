@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,49 +14,104 @@
   <script src="js/vue.js"></script>
   <script src="js/axios.js"></script>
 </head>
-
 <body class="bg-body">
-  <!-- 一：头部 矿场监控中心 -->
-  <div class="nav-top">
-    <div class="nav-center">
-      <h2 class="h2">机房选项</h2>
-      <p>Ebang mine data monitoring center</p>
+  <div id="siteBox">
+    <!-- 一：头部 矿场监控中心 -->
+    <div class="nav-top">
+      <div class="nav-center"><h2 class="h2">机房选项</h2><p>Ebang mine data monitoring center</p></div>
+      <button type="button" class="enter-room" @click="goIndex()">点击进入</button>
     </div>
+    <!-- 二：内容 汇总数据 和 详细数据 -->
+    <section class="section">
+      <!-- 弹性盒子 -->
+      <div class="enter-box">
+          <div class="enter-item" v-for="item in list" :key="item.id" @click="checkboxItem(item)" :class="{active:item.active}">
+            <div class="enter-text">{{item.siteName}}</div>
+          </div>
+        </div>
+    </section>
   </div>
-  <!-- 二：内容 汇总数据 和 详细数据 -->
-  <section class="section">
-    <!-- 弹性盒子 -->
-    <div class="enter-box" id="siteBox">
-      <div class="enter-item" onclick="location.href='monitor.html'">site002</div>
-    </div>
-  </section>
-
   <script>
-    // axios中文手册：https://www.kancloud.cn/yunye/axios/234845
-
-
     var vm = new Vue({
-      el: "siteBox",
-      data: {
-        list: []
+      el: "#siteBox",
+      data : {
+        list: [],
       },
-      mounted() {
-        axios({
-          method: 'get',
-          url: 'http://124.160.26.251:8090/minerRoom/querySiteList',
-          proxy: {
-            host: '192.168.80.82',
-            port: 80,
-            auth: {
-              username: 'mikeymike',
-              password: 'rapunz3l'
+      mounted () {
+        this.send(),
+        this.goIndex = function(){
+          let elms = document.querySelectorAll(".active");
+          let arr = [];
+          if(elms.length > 0){
+            for(var i=0;i<elms.length;i++){
+              arr.push(elms[i].children[0].innerHTML);
             }
+            localStorage.setItem('userList',JSON.stringify(arr));
+            location.href="monitorVue.html";
+          }else{
+            this.tvmsg('请选择机房！',1000);
           }
-        }).then(function (data) {
-          console.log(data)
-        });
+        }
+      },
+      methods: {
+        send(){
+          var that = this;
+          axios({
+            method: 'get',
+            url: './data/sitename.json'
+          }).then(function (data) {
+            that.list = data.data.content;
+            var ulist;
+            if(localStorage.getItem("userList")){ ulist = JSON.parse(localStorage.getItem('userList')); }
+            for(key in that.list){
+              if(ulist.indexOf(that.list[key].siteName) !== -1){
+                Vue.set(that.list[key],'active',true)
+              }
+            }
+          }).catch(function (error) {
+            console.log(error);
+          });
+        },
+        checkboxItem:function(item){
+          if(item.active){
+            Vue.set(item,'active',false)  //为item添加不存在的属性，需要使用vue提供的Vue.set( object, key, value )方法
+          }else{
+            Vue.set(item,'active',true)
+          }
+        },
+        tvmsg:function(msg,time){
+          if(time<800 || !time){time=800;}//800ms最小极限和默认值
+          var alertStr = document.createElement("div");alertStr.setAttribute("class","tv-alert");alertStr.setAttribute("id","alertbox");
+          var htmlStr = '<div class="tv-mask" id="tmask"><strong><i class="icon iconfont">&#xe643;</i>'+msg+'</strong></div>';
+          alertStr.innerHTML = htmlStr;
+          document.body.insertBefore(alertStr,document.body.firstChild);
+          /** 使用js实现弹框出现——离开效果 **/
+          /**
+           * 1.使用css3做弹框进入效果，但离开定时器获取不到元素位置 console.log(document.getElementById("tmask").style.top); //NaN
+           * **/ 
+          var stop = 0;var leave;
+          var alertEnter = setInterval(function(){
+            if(stop<50){
+              stop++;document.getElementById("tmask").style.top = stop+'%';
+            }else{
+              clearInterval(alertEnter)};
+              leave = parseInt(document.getElementById("tmask").style.top);
+          },time/100)
+          
+          setTimeout(function(){
+            var alertLeave = setInterval(function(){
+              if(leave > 0){
+                leave--;document.getElementById("tmask").style.top = leave+'%';
+              }else{
+                clearInterval(alertLeave);alertStr.remove();
+              }
+            },time/100)
+            },time);
+        },
+
       }
     })
+
   </script>
 </body>
 

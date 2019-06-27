@@ -1,0 +1,13 @@
+{
+  "code": 10000,
+  "content": {
+    "immediateCal": 199869.08309898,
+    "activeNum": 16600,
+    "standardRate": 0.96,
+    "standardCalc": 208291.12151403,
+    "alarmNum": 751,
+    "hadMinerNum": 16857,
+    "onlinePercent": "98.48",
+    "alarmPercent": "4.52"
+  }
+}

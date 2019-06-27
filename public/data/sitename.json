@@ -1,0 +1,115 @@
+{
+  "code": 10000,
+  "content": [
+    {
+      "id": 6,
+      "siteName": "四川理塘措洼",
+      "userName": "ebit001"
+    },
+    {
+      "id": 7,
+      "siteName": "内蒙乌斯泰",
+      "userName": "ebit002"
+    },
+    {
+      "id": 8,
+      "siteName": "云南水富张窝",
+      "userName": "ebit003"
+    },
+    {
+      "id": 9,
+      "siteName": "四川乐山龚嘴",
+      "userName": "ebit004"
+    },
+    {
+      "id": 10,
+      "siteName": "四川汶川映秀",
+      "userName": "ebit005"
+    },
+    {
+      "id": 11,
+      "siteName": "四川黑水三奥",
+      "userName": "ebit006"
+    },
+    {
+      "id": 12,
+      "siteName": "云南洛水河",
+      "userName": "ebit007"
+    },
+    {
+      "id": 13,
+      "siteName": "四川康定三合",
+      "userName": "ebit008"
+    },
+    {
+      "id": 14,
+      "siteName": "雅江金通009",
+      "userName": "ebit009"
+    },
+    {
+      "id": 15,
+      "siteName": "四川泸定黄昆山",
+      "userName": "ebit0010"
+    },
+    {
+      "id": 16,
+      "siteName": "雅江金通011",
+      "userName": "ebit011"
+    },
+    {
+      "id": 17,
+      "siteName": "康定三合一",
+      "userName": "ebit012"
+    },
+    {
+      "id": 77,
+      "siteName": "四川巴朗河",
+      "userName": "balanghe"
+    },
+    {
+      "id": 78,
+      "siteName": "乌海宝山",
+      "userName": "gongxifacai"
+    },
+    {
+      "id": 79,
+      "siteName": "云南麦地河",
+      "userName": "maidihe"
+    },
+    {
+      "id": 80,
+      "siteName": "乌海西来峰",
+      "userName": "xilaifeng"
+    },
+    {
+      "id": 81,
+      "siteName": "四川理塘",
+      "userName": "sclitang"
+    },
+    {
+      "id": 82,
+      "siteName": "新疆伊宁",
+      "userName": "xjgongliu"
+    },
+    {
+      "id": 83,
+      "siteName": "云南普洱",
+      "userName": "puer"
+    },
+    {
+      "id": 84,
+      "siteName": "四川姑咋",
+      "userName": "scguza"
+    },
+    {
+      "id": 85,
+      "siteName": "四川永西沟",
+      "userName": "yongxigou"
+    },
+    {
+      "id": 86,
+      "siteName": "四川英雄坡",
+      "userName": "yingxiongpo"
+    }
+  ]
+}
