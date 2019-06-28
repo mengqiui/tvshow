@@ -62,7 +62,7 @@
           }).then(function (data) {
             that.list = data.data.content;
             var ulist;
-            if(localStorage.getItem("userList")){ ulist = JSON.parse(localStorage.getItem('userList')); }
+            if(localStorage.getItem("userList")){ ulist = JSON.parse(localStorage.getItem('userList')); }else{return;}
             for(key in that.list){
               if(ulist.indexOf(that.list[key].siteName) !== -1){
                 Vue.set(that.list[key],'active',true)

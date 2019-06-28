@@ -18,7 +18,7 @@
   <div id="monitor">
     <!-- 一：头部 矿场监控中心 -->
     <div class="nav-top">
-        <div class="nav-center"><h2 class="h2" id="siteName1">机房监控中心</h2><p>Ebang mine data monitoring center</p></div>
+        <div class="nav-center"><h2 class="h2">{{sitename}}机房监控中心</h2><p>Ebang mine data monitoring center</p></div>
       </div>
       <!-- 二：内容 汇总数据 和 详细数据 -->
       <section class="section">
@@ -81,20 +81,29 @@
       </section>
   </div>
 <script src="js/echarts.js"></script>
-<script src="js/jquery.leoTextAnimate.js"></script>
-<script src="js/index.js"></script>
+
 <script>
   var vm = new Vue({
     el:"#monitor",
     data:{
-      sitename:sname
+      sitename:""
     },
-    mounted(){
+    created(){
       this.init()
     },
     methods:{
       init:function(){
-
+        var ulist;var count = 0;var that = this;
+        if(localStorage.getItem("userList")){ 
+          ulist = JSON.parse(localStorage.getItem('userList')); that.sitename = ulist[count];
+          setInterval(function(){
+            count++;if(count > (ulist.length-1)){count = 0;}
+            that.sitename = ulist[count];
+          },500);
+        }
+      },
+      blockData:function(){
+        
       }
     }
   })
