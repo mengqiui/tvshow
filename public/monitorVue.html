@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,99 +15,234 @@
   <script src="js/vue.js"></script>
   <script src="js/axios.js"></script>
 </head>
+
 <body class="bg-body">
   <div id="monitor">
     <!-- 一：头部 矿场监控中心 -->
     <div class="nav-top">
-        <div class="nav-center"><h2 class="h2">{{sitename}}机房监控中心</h2><p>Ebang mine data monitoring center</p></div>
+      <div class="nav-center">
+        <h2 class="h2">{{sitename}}机房监控中心</h2>
+        <p>Ebang mine data monitoring center</p>
       </div>
-      <!-- 二：内容 汇总数据 和 详细数据 -->
-      <section class="section">
-        <!-- 2-1：三块 数据显示 -->
-        <!-- <p><div class="item-button"><span class="icon iconfont">&#xe615;</span>总体概况</div></p> -->
-        <div class="item-panel left">
-          <div class="item-panel-left">
-            <span class="icon iconfont color-yel">&#xe61a;</span>
-          </div>
-          <div class="item-panel-right">
-              <p>活跃数/总数</p>
-              <div class="color-yel" id="oneBlock"><div><span class="number" id="activeNum">2650</span>/<span class="number" id="allNum">86654</span></div></div>
-              <span class="text-tip" style="left:230px;">在线率:<em id="online">92.2%</em></span>
-          </div>
+    </div>
+    <!-- 二：内容 汇总数据 和 详细数据 -->
+    <section class="section">
+      <!-- 2-1：三块 数据显示 -->
+      <!-- <p><div class="item-button"><span class="icon iconfont">&#xe615;</span>总体概况</div></p> -->
+      <div class="item-panel left">
+        <div class="item-panel-left">
+          <span class="icon iconfont color-yel">&#xe61a;</span>
         </div>
-        <div class="item-panel mcenter clear">
-          <div class="item-panel-left">
-            <span class="icon iconfont color-sky fs60">&#xe60b;</span>
-          </div>
-          <div class="item-panel-right">
-              <p>实时算力/标准算力(T)</p>
-              <div class="color-sky"><span class="number" id="realTime">260</span>/<span class="number" id="allcal">8654</span></div><span class="text-tip" style="right:360px;">达标率:<em id="goodvol">92.2%</em></span>
-          </div>
-        </div>
-        <div class="item-panel right mr0">
-          <div class="item-panel-left">
-            <span class="icon iconfont color-org">&#xe604;</span>
-          </div>
-          <div class="item-panel-right">
-              <p>故障总数/故障率</p>
-              <div class="color-org"><span class="number" id="badall">2650</span>/<span class="number" id="badvol">1.26</span><em class="numberpei">%</em></div>
-          </div>
-        </div>
-      
-        <!-- 2-2：图表 报表数据 -->
-        <div class="chart-data">
-          <!-- 2-2-1、故障数据饼图 堆叠图 -->
-          <div class="data-model model-left left">
-            <div class="model-title"><span class="icon iconfont">&#xeb95;</span>告警类型统计</div>
-            <div id="echarts01title" class="echart-tips"></div>
-            <div id="echarts01" style="width:270px;height:300px;"></div>
-          </div>
-      
-          <!-- 2-2-2、异常设备表格 -->
-          <div class="data-model model-right right">
-            <div class="model-title"><span class="icon iconfont">&#xe635;</span>矿机实时数据</div>
-            <div class="model-body">
-              <table id="tableId">
-                <thead>
-                  <th>IP</th>
-                  <th>告警类型</th>
-                  <th>告警时间</th>
-                  <th>消警时间</th>
-                </thead>
-                <tbody class="fs14" id="modelData"><tr class="firstno"><td>--</td><td>--</td><td>--</td><td>--</td></tr></tbody>
-              </table>
+        <div class="item-panel-right">
+          <p>活跃数/总数</p>
+          <div class="color-yel" id="oneBlock">
+            <div><span class="number">{{datalist.activeNum}}</span>/<span class="number">{{datalist.allNum}}</span>
             </div>
           </div>
+          <span class="text-tip" style="left:230px;">在线率:<em>{{datalist.onlinePercent}}%</em></span>
         </div>
-      </section>
-  </div>
-<script src="js/echarts.js"></script>
+      </div>
+      <div class="item-panel mcenter clear">
+        <div class="item-panel-left">
+          <span class="icon iconfont color-sky fs60">&#xe60b;</span>
+        </div>
+        <div class="item-panel-right">
+          <p>实时算力/标准算力(T)</p>
+          <div class="color-sky"><span class="number">{{datalist.immediateCal}}</span>/<span
+              class="number">{{datalist.standardCalc}}</span></div><span class="text-tip"
+            style="right:360px;">达标率:<em>{{datalist.standardRate}}%</em></span>
+        </div>
+      </div>
+      <div class="item-panel right mr0">
+        <div class="item-panel-left">
+          <span class="icon iconfont color-org">&#xe604;</span>
+        </div>
+        <div class="item-panel-right">
+          <p>故障总数/故障率</p>
+          <div class="color-org"><span class="number">{{datalist.alarmNum}}</span>/<span
+              class="number">{{datalist.alarmPercent}}</span><em class="numberpei">%</em></div>
+        </div>
+      </div>
 
-<script>
-  var vm = new Vue({
-    el:"#monitor",
-    data:{
-      sitename:""
-    },
-    created(){
-      this.init()
-    },
-    methods:{
-      init:function(){
-        var ulist;var count = 0;var that = this;
-        if(localStorage.getItem("userList")){ 
-          ulist = JSON.parse(localStorage.getItem('userList')); that.sitename = ulist[count];
-          setInterval(function(){
-            count++;if(count > (ulist.length-1)){count = 0;}
-            that.sitename = ulist[count];
-          },500);
-        }
+      <!-- 2-2：图表 报表数据 -->
+      <div class="chart-data">
+        <!-- 2-2-1、故障数据饼图 堆叠图 -->
+        <div class="data-model model-left left">
+          <div class="model-title"><span class="icon iconfont">&#xeb95;</span>告警类型统计</div>
+          <div id="echarts01title" class="echart-tips"></div>
+          <div id="echarts01" style="width:270px;height:300px;"></div>
+        </div>
+
+        <!-- 2-2-2、异常设备表格 -->
+        <div class="data-model model-right right">
+          <div class="model-title"><span class="icon iconfont">&#xe635;</span>矿机实时数据</div>
+          <div class="model-body">
+            <table id="tableId">
+              <thead>
+                <th>IP</th>
+                <th>告警类型</th>
+                <th>告警时间</th>
+                <th>消警时间</th>
+              </thead>
+              <tbody class="fs14" id="modelData">
+                <tr :class="item.alarmRecovery==1?'tr-ok':'tr-error'" v-for="item in tabledata">
+                  <td >{{item.ip}}</td>
+                  <td>{{item.alarmInfo}}</td>
+                  <td>{{item.alarmTime}}</td>
+                  <td>{{item.alarmRecoveryTime}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="js/echarts.js"></script>
+  <script>
+    var etimer;
+    var vm = new Vue({
+      el: "#monitor",
+      data: {
+        sitename: "",
+        datalist: "",
+        tabledata: [],
       },
-      blockData:function(){
+      created() {
+        this.init(),
+          this.blockData(),
+          this.pieDraw(),
+          this.tableList()
+      },
+      methods: {
+        init: function () {
+          var ulist; var count = 0; var that = this;
+          if (localStorage.getItem("userList")) {
+            ulist = JSON.parse(localStorage.getItem('userList')); that.sitename = ulist[count];
+            setInterval(function () {
+              count++; if (count > (ulist.length - 1)) { count = 0; }
+              that.sitename = ulist[count];
+            }, 2000);
+          }
+        },
+        blockData: function () {
+          var that = this;
+          axios({
+            method: 'get',
+            url: './data/getnumber.json'
+          }).then(function (data) {
+            var lists = {};
+            lists.activeNum = data.data.content.activeNum;
+            lists.allNum = data.data.content.hadMinerNum;
+            lists.onlinePercent = data.data.content.onlinePercent;
+            lists.immediateCal = data.data.content.immediateCal > 1000 ? (data.data.content.immediateCal / 1000).toFixed(1) : data.data.content.immediateCal;
+            lists.standardCalc = data.data.content.standardCalc > 1000 ? (data.data.content.standardCalc / 1000).toFixed(1) : data.data.content.standardCalc;;
+            lists.standardRate = data.data.content.standardRate * 100;
+            lists.alarmNum = data.data.content.alarmNum;
+            lists.alarmPercent = data.data.content.alarmPercent;
+            that.datalist = lists;
+          }).catch(function (error) {
+            console.log(error);
+          });
+        },
+        DrawPieArea: function (drawdom, piedata, color, curIndex, titleDom) {
+          var option = {
+            stillShowZeroSum: false,
+            series: [{
+              type: 'pie',
+              radius: ['50%', '80%'],
+              avoidLabelOverlap: false,
+              label: {
+                normal: { show: false, position: 'center' },
+                emphasis: {
+                  show: true,
+                  formatter: "\n{B|{c}}\n{S|{d}%}",
+                  textStyle: {
+                    fontSize: '18',
+                    fontWeight: 'bold',
+                    color: '#ddd',
+                    rich: {
+                      B: { fontSize: 18, fontWeight: 'bolder', },
+                      S: { fontSize: 14 }
+                    },
+                  }
+                }
+              },
+              labelLine: { normal: { show: false } },
+              data: piedata,
+              silent: true,
+              animationType: 'scale',
+              animationEasing: 'quarticIn'
+            }],
+          };
+          var chart_pie = echarts.init(drawdom);
+          chart_pie.setOption(option, true);
+          if (curIndex == null) {
+            chart_pie.dispatchAction({ type: 'highlight', seriesIndex: 0, dataIndex: 0 });
+            if (titleDom) {
+              titleDom.text = piedata[0].name;
+              titleDom.style.color = piedata[0].itemStyle.normal.color;
+            }
+          } else {
+            chart_pie.dispatchAction({ type: 'highlight', seriesIndex: 0, dataIndex: curIndex });
+            if (titleDom) {
+              titleDom.innerHTML = piedata[curIndex].name;
+              titleDom.style.color = piedata[curIndex].itemStyle.normal.color;
+            }
+            etimer = setInterval(function () {
+              var dataLen = piedata.length;
+              // 取消高亮
+              chart_pie.dispatchAction({ type: 'downplay', seriesIndex: 0, dataIndex: curIndex });
+              curIndex = (curIndex + 1) % dataLen;
+              if (titleDom) {
+                titleDom.innerHTML = piedata[curIndex].name;
+                titleDom.style.color = piedata[curIndex].itemStyle.normal.color;
+              }
+              //设置高亮
+              chart_pie.dispatchAction({ type: 'highlight', seriesIndex: 0, dataIndex: curIndex });
+            }, 500);
+          }
+        },
+        pieDraw: function () {
+          var that = this;
+          axios({
+            method: 'get',
+            url: './data/piedata.json'
+          }).then(function (data) {
+            var datas = data.data.content;
+            clearInterval(etimer);
+            var myChart = document.getElementById('echarts01');
+            var domtitle = document.getElementById("echarts01title");
+            var myindex = 0;
+            var mycolor = ['#ff7f50', '#87cefa', '#da70d6', '#168039', '#cccc0f'];
+            var data = [
+              { value: datas.alarm2.alarmNum, name: '算力告警', itemStyle: { normal: { color: mycolor[0] } } },
+              { value: datas.alarm4.alarmNum, name: '风扇告警', itemStyle: { normal: { color: mycolor[1] } } },
+              { value: datas.alarm3.alarmNum, name: '温度告警', itemStyle: { normal: { color: mycolor[2] } } },
+              { value: datas.alarm1.alarmNum, name: '网络告警', itemStyle: { normal: { color: mycolor[3] } } },
+              { value: datas.alarm5.alarmNum, name: '板卡告警', itemStyle: { normal: { color: mycolor[4] } } }
+            ];
+            that.DrawPieArea(myChart, data, mycolor, myindex, domtitle);
+          }).catch(function (error) {
+            console.log(error)
+          })
+        },
+        tableList: function () {
+          var that = this;
+          axios({
+            method: 'get',
+            url: './data/tabledata.json'
+          }).then(function (data) {
+            that.tabledata = data.data.content;
+          }).catch(function (error) {
+            console.log(error)
+          })
+        },
         
       }
-    }
-  })
-</script>
+    })
+
+  </script>
 </body>
+
 </html>

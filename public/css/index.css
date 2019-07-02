@@ -96,7 +96,8 @@ table {
 .data-model .model-body table tbody .tr-error td{color:#ff4e4e;}
 .echart-tips{ position: absolute;top: 38%;left:38%;font-size:18px;font-weight: 700;}
 .tableid_ thead tr td{opacity:0;}
-
+.data-model .model-body table tbody .trok{color:#32cd32;}
+.data-model .model-body table tbody .trer{color:#ff4e4e;}
 
 .enter-box{display: flex;display: -webkit-flex; /* Safari */ justify-content: flex-start;width:900px;margin: auto;flex-wrap: wrap;}
 .enter-box .enter-item{height: 90px;width:200px;overflow: hidden;text-align: center;font-size:28px;line-height:90px;color: #ddd;cursor: pointer; border: 1px solid #034c6a;box-shadow: 0px 0px 60px #034c6a inset;margin:0 20px 20px 0;}
