@@ -13,7 +13,7 @@ $(function () {
 
 })
 
-setInterval(function(){blockData();echart01(); tableInterval();},1000*60*0.5);//30秒
+setInterval(function(){blockData();echart01(); tableInterval();},1000*5);//30秒
 
 var etimer, MyMarhq;
 
@@ -164,6 +164,7 @@ function blockData() {
   array.forEach(function(val){
     str +='$("#'+$(val).attr("id")+'").leoTextAnimate({ delay: 10, autorun: true, start: "" }, "#'+$(val).attr("id")+'");';
   })
+  eval(str);//数字动效
 }
 
 //表格数据滚动效果
