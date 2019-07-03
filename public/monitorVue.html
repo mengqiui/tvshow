@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +14,6 @@
   <script src="js/vue.js"></script>
   <script src="js/axios.js"></script>
 </head>
-
 <body class="bg-body">
   <div id="monitor">
     <!-- 一：头部 矿场监控中心 -->
@@ -36,7 +34,8 @@
         <div class="item-panel-right">
           <p>活跃数/总数</p>
           <div class="color-yel" id="oneBlock">
-            <div><span class="number">{{datalist.activeNum}}</span>/<span class="number">{{datalist.allNum}}</span>
+            <div>
+              <span class="number">{{datalist.activeNum}}</span>/<span class="number">{{datalist.allNum}}</span>
             </div>
           </div>
           <span class="text-tip" style="left:230px;">在线率:<em>{{datalist.onlinePercent}}%</em></span>
@@ -87,9 +86,9 @@
               <tbody class="fs14" id="modelData">
                 <tr :class="item.alarmRecovery==1?'tr-ok':'tr-error'" v-for="item in tabledata">
                   <td >{{item.ip}}</td>
-                  <td>{{item.alarmInfo}}</td>
-                  <td>{{item.alarmTime}}</td>
-                  <td>{{item.alarmRecoveryTime}}</td>
+                  <td>{{item.alarmInfo+setnum}}</td>
+                  <td>{{item.alarmTime.slice(5)}}</td>
+                  <td>{{item.alarmRecoveryTime?item.alarmRecoveryTime.slice(5):'--'}}</td>
                 </tr>
               </tbody>
             </table>
@@ -107,12 +106,26 @@
         sitename: "",
         datalist: "",
         tabledata: [],
+        setnum:'',
+        start: 1,
+        end: 100
       },
       created() {
         this.init(),
-          this.blockData(),
-          this.pieDraw(),
-          this.tableList()
+        this.blockData(),
+        this.pieDraw(),
+        this.tableList()
+      },
+      mounted(){
+        var that = this;var count = 0;
+        var time = setTimeout(opa, 1000);
+        function opa() {
+          count++;if(count == 100){count=0;}that.setnum = count;
+          that.blockData(count);that.pieDraw(count);that.tableList(count);
+          clearTimeout(time); //清除上一次的定时器，否则会无限开多个
+          setTimeout(opa, 2000);//方法中调用定时器实现循环
+	      }
+
       },
       methods: {
         init: function () {
@@ -126,20 +139,20 @@
           }
         },
         blockData: function () {
-          var that = this;
+          var that = this;var num;if(arguments[0]){num = arguments[0];}else{num = 0}
           axios({
             method: 'get',
             url: './data/getnumber.json'
           }).then(function (data) {
             var lists = {};
-            lists.activeNum = data.data.content.activeNum;
-            lists.allNum = data.data.content.hadMinerNum;
-            lists.onlinePercent = data.data.content.onlinePercent;
-            lists.immediateCal = data.data.content.immediateCal > 1000 ? (data.data.content.immediateCal / 1000).toFixed(1) : data.data.content.immediateCal;
-            lists.standardCalc = data.data.content.standardCalc > 1000 ? (data.data.content.standardCalc / 1000).toFixed(1) : data.data.content.standardCalc;;
-            lists.standardRate = data.data.content.standardRate * 100;
-            lists.alarmNum = data.data.content.alarmNum;
-            lists.alarmPercent = data.data.content.alarmPercent;
+            lists.activeNum = data.data.content.activeNum+num*2;
+            lists.allNum = data.data.content.hadMinerNum+num*3;
+            lists.onlinePercent = (lists.activeNum/lists.allNum * 100).toFixed(2);
+            lists.immediateCal = data.data.content.immediateCal > 1000 ? ((data.data.content.immediateCal / 1000)+num).toFixed(1) : data.data.content.immediateCal+num;
+            lists.standardCalc = data.data.content.standardCalc > 1000 ? ((data.data.content.standardCalc / 1000)+num*2.1).toFixed(1) : data.data.content.standardCalc+num*2.1;
+            lists.standardRate = (lists.immediateCal/lists.standardCalc * 100).toFixed(2);
+            lists.alarmNum = data.data.content.alarmNum+num;
+            lists.alarmPercent = (lists.alarmNum/lists.allNum * 100).toFixed(2);
             that.datalist = lists;
           }).catch(function (error) {
             console.log(error);
@@ -243,6 +256,7 @@
     })
 
   </script>
+
 </body>
 
 </html>
